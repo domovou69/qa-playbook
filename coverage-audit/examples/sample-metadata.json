@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "scannedAt": "2026-06-14T10:00:00.000Z",
+    "testGlob": "tests/**/*.spec.ts",
+    "reportPath": "reports/mochawesome.json",
+    "scanVersion": "1.0.0"
+  },
+  "summary": {
+    "totalLogicalTests": 2000,
+    "dataDrivenTests": 45,
+    "totalDataIterations": 187,
+    "neverRunCount": 38,
+    "duplicatePairCount": 12,
+    "subsetPairCount": 7,
+    "hardcodedWaitTestCount": 23,
+    "avgDurationMs": 4210
+  },
+  "tests": [
+    {
+      "id": "tests/checkout/payment.spec.ts:14",
+      "name": "User can complete checkout with credit card",
+      "file": "tests/checkout/payment.spec.ts",
+      "line": 14,
+      "tags": ["smoke", "checkout"],
+      "dataDriven": false,
+      "iterations": 0,
+      "steps": [
+        "amOnPage:/checkout",
+        "fillField:Card Number",
+        "fillField:Expiry",
+        "fillField:CVV",
+        "click:Pay Now",
+        "see:Order confirmed"
+      ],
+      "stepsHash": "a1b2c3d4e5f6",
+      "hardcodedWaitCount": 0,
+      "hardcodedWaits": []
+    },
+    {
+      "id": "tests/checkout/payment.spec.ts:38",
+      "name": "Checkout flow for multiple card types",
+      "file": "tests/checkout/payment.spec.ts",
+      "line": 38,
+      "tags": ["checkout"],
+      "dataDriven": true,
+      "iterations": 3,
+      "datasetSource": "cardTypes",
+      "steps": [
+        "amOnPage:/checkout",
+        "fillField:Card Number",
+        "fillField:Expiry",
+        "fillField:CVV",
+        "click:Pay Now",
+        "see:Order confirmed"
+      ],
+      "stepsHash": "a1b2c3d4e5f6",
+      "hardcodedWaitCount": 1,
+      "hardcodedWaits": [{ "line": 52, "rawArg": "3" }]
+    },
+    {
+      "id": "tests/checkout/cart.spec.ts:8",
+      "name": "User adds item to cart",
+      "file": "tests/checkout/cart.spec.ts",
+      "line": 8,
+      "tags": ["smoke"],
+      "dataDriven": false,
+      "iterations": 0,
+      "steps": [
+        "amOnPage:/catalog",
+        "click:Add to cart",
+        "see:1 item in cart"
+      ],
+      "stepsHash": "f6e5d4c3b2a1",
+      "hardcodedWaitCount": 0,
+      "hardcodedWaits": []
+    }
+  ],
+  "runtime": {
+    "tests/checkout/payment.spec.ts:14": {
+      "duration": 6200,
+      "state": "passed",
+      "speed": "slow",
+      "runCount": 1
+    },
+    "tests/checkout/payment.spec.ts:38": {
+      "duration": 18900,
+      "state": "passed",
+      "speed": "slow",
+      "runCount": 3
+    },
+    "tests/checkout/cart.spec.ts:8": {
+      "duration": 1800,
+      "state": "passed",
+      "speed": "fast",
+      "runCount": 1
+    }
+  },
+  "neverRun": [],
+  "duplicateCandidates": [
+    {
+      "testAId": "tests/checkout/payment.spec.ts:14",
+      "testBId": "tests/checkout/payment.spec.ts:38",
+      "similarity": 1.0,
+      "exactMatch": true,
+      "sharedSteps": [
+        "amOnPage:/checkout",
+        "fillField:Card Number",
+        "fillField:Expiry",
+        "fillField:CVV",
+        "click:Pay Now",
+        "see:Order confirmed"
+      ]
+    }
+  ],
+  "subsetCandidates": [
+    {
+      "subsetTestId": "tests/checkout/cart.spec.ts:8",
+      "supersetTestId": "tests/checkout/payment.spec.ts:14",
+      "coverageRatio": 0.667,
+      "isPrefix": true
+    }
+  ],
+  "slowTests": [
+    { "testId": "tests/checkout/payment.spec.ts:38", "duration": 18900, "rank": 1 },
+    { "testId": "tests/checkout/payment.spec.ts:14", "duration": 6200,  "rank": 2 },
+    { "testId": "tests/checkout/cart.spec.ts:8",     "duration": 1800,  "rank": 3 }
+  ]
+}

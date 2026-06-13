@@ -1,0 +1,18 @@
+{
+  "name": "coverage-audit",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "scan": "tsx scripts/scan.ts",
+    "scan:help": "tsx scripts/scan.ts --help"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "ts-morph": "^23.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0"
+  }
+}
