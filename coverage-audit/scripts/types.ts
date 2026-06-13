@@ -52,20 +52,64 @@ export interface LogicalTest {
   /** Normalised step sequence extracted from the test body */
   steps: NormalisedStep[];
 
+  /** Action steps only (excluding assertions like see, dontSee, grab*) */
+  actionSteps: NormalisedStep[];
+
+  /** Assertion steps (see, dontSee, grabTextFrom, etc) */
+  assertionSteps: NormalisedStep[];
+
   /** Hash of steps[] — primary key for duplicate/subset detection */
   stepsHash: StepsHash;
+
+  /** Hash of actionSteps[] — for comparison without assertions */
+  actionStepsHash: StepsHash;
 
   /** Number of I.wait(n) calls with a numeric literal argument */
   hardcodedWaitCount: number;
 
   /** Every I.wait(n) occurrence: line number + millisecond/second value */
   hardcodedWaits: HardcodedWait[];
+
+  /** Precondition (Before/BeforeSuite) for this test, if any */
+  precondition?: PreconditionInfo;
+
+  /**
+   * For Data() tests: whether all dataset rows are cosmetically identical
+   * (differ only in identity fields with no code path branching)
+   */
+  dataHomogeneity?: {
+    isHomogeneous: boolean;
+    reason?: string;
+  };
+
+  /** Helpers injected beyond 'I' (e.g., loginPage, api, dbHelper) */
+  customHelpers: string[];
+
+  /** Whether test uses grab* methods with assertions */
+  hasGrabAssertions: boolean;
 }
 
 export interface HardcodedWait {
   line: number;
   /** Raw first argument as written, e.g. "3" or "1000" */
   rawArg: string;
+  /** Which helper method: wait, waitForElement, waitForText, etc. */
+  method: string;
+  /** Whether this is a masked wait (waitForElement) vs explicit wait() */
+  masked: boolean;
+}
+
+/**
+ * Precondition extracted from Before/BeforeSuite hooks.
+ * Used to group tests by their setup context for accurate duplicate detection.
+ */
+export interface PreconditionInfo {
+  /** Hash of the normalized precondition steps */
+  hash: string;
+  /** Normalized precondition steps */
+  steps: NormalisedStep[];
+  /** Line where precondition is defined */
+  line?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -105,8 +149,13 @@ export interface DuplicateCandidate {
   sharedSteps: NormalisedStep[];
   /** True when stepsHash values are identical — guaranteed fully redundant ordering */
   exactMatch: boolean;
+  /** Confidence score 0-100 based on matching criteria */
+  confidence: number;
+  /** Reason for the finding */
+  reason: string;
+  /** Whether preconditions match (null if preconditions differ) */
+  preconditionsMatch?: boolean;
 }
-
 /**
  * Test A whose steps are a prefix or strict subset of test B's steps.
  * A may be redundant IF test B is always run.
@@ -118,6 +167,10 @@ export interface SubsetCandidate {
   coverageRatio: number;
   /** Whether subsetTest's steps form a contiguous prefix of supersetTest's */
   isPrefix: boolean;
+  /** Confidence score 0-100 */
+  confidence: number;
+  /** Reason for the finding */
+  reason: string;
 }
 
 // ---------------------------------------------------------------------------

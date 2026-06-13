@@ -1,0 +1,71 @@
+{
+  "helpers": [
+    "I"
+  ],
+  "similarity_threshold": 0.85,
+  "subset_threshold": 0.9,
+  "wait_timeout_warning_ms": 10000,
+  "slow_test_threshold_ms": 60000,
+  "top_slowest_tests": 20,
+  "assertion_keywords": [
+    "see",
+    "dontSee",
+    "seeInCurrentUrl",
+    "dontSeeInCurrentUrl",
+    "seeInSource",
+    "dontSeeInSource",
+    "seeAttributesOnElements",
+    "seeCheckboxIsChecked",
+    "dontSeeCheckboxIsChecked",
+    "seeInField",
+    "dontSeeInField",
+    "seeInPopup",
+    "grabTextFrom",
+    "grabValueFrom",
+    "grabAttributeFrom",
+    "grabCssPropertyFrom",
+    "grabNumberOfOpenTabs",
+    "grabCurrentUrl",
+    "grabCurrentUrlPath",
+    "grabTitle"
+  ],
+  "wait_keywords": [
+    "wait",
+    "waitForElement",
+    "waitForText",
+    "waitForVisible",
+    "waitForFunction",
+    "waitForNavigation",
+    "waitForEnabled",
+    "waitInUrl"
+  ],
+  "semantic_equivalences": {
+    "fill_field": [
+      "fillField",
+      "fill",
+      "setValue",
+      "attachFile"
+    ],
+    "click": [
+      "click",
+      "clickCss",
+      "checkOption",
+      "uncheckOption",
+      "selectOption",
+      "selectMultiple",
+      "pressKey"
+    ],
+    "navigate": [
+      "amOnPage",
+      "amOnUrl",
+      "openNewTab"
+    ],
+    "wait_for": [
+      "wait",
+      "waitForElement",
+      "waitForText",
+      "waitForVisible",
+      "waitForFunction"
+    ]
+  }
+}
